@@ -7,11 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.application.model.AuthRequest;
 import com.application.model.Doctor;
@@ -21,6 +17,7 @@ import com.application.service.UserRegistrationService;
 import com.application.util.JwtUtils;
 
 @RestController
+@CrossOrigin(origins = "*") // ✅ IMPORTANT
 public class LoginController {
 
 	@Autowired
@@ -35,59 +32,62 @@ public class LoginController {
 	@Autowired
 	private DoctorRegistrationService doctorRegisterService;
 
+	// ================= HOME =================
 	@GetMapping("/")
 	public String welcomeMessage() {
 		return "Welcome to HealthCare Management system !!!";
 	}
 
+	// ================= JWT LOGIN =================
 	@PostMapping("/authenticate")
-	public ResponseEntity<String> generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+	public ResponseEntity<?> generateToken(@RequestBody AuthRequest authRequest) {
+
 		try {
-			System.out.println(authRequest.getEmail());
-			System.out.println(authRequest.getPassword());
 			List<User> users = userRegisterService.getAllUsers();
 			String currentEmail = "";
+
 			for (User obj : users) {
 				if (obj.getEmail().equalsIgnoreCase(authRequest.getEmail())) {
 					currentEmail = obj.getUsername();
 				}
 			}
-			authenticationManager
-					.authenticate(new UsernamePasswordAuthenticationToken(currentEmail, authRequest.getPassword()));
+
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(currentEmail, authRequest.getPassword()));
+
 		} catch (Exception ex) {
-			throw new Exception("Invalid Username/password");
+			return new ResponseEntity<>("Invalid Username/password", HttpStatus.UNAUTHORIZED);
 		}
-		return new ResponseEntity<String>(jwtUtil.generateToken(authRequest.getEmail()), HttpStatus.OK);
+
+		String token = jwtUtil.generateToken(authRequest.getEmail());
+		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 
+	// ================= USER LOGIN =================
 	@PostMapping("/loginuser")
-	public User loginUser(@RequestBody User user) throws Exception {
-		String currEmail = user.getEmail();
-		String currPassword = user.getPassword();
+	public ResponseEntity<?> loginUser(@RequestBody User user) {
 
-		User userObj = null;
-		if (currEmail != null && currPassword != null) {
-			userObj = userRegisterService.fetchUserByEmailAndPassword(currEmail, currPassword);
-		}
+		User userObj = userRegisterService
+				.fetchUserByEmailAndPassword(user.getEmail(), user.getPassword());
+
 		if (userObj == null) {
-			throw new Exception("User does not exists!!! Please enter valid credentials...");
+			return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
 		}
-		return userObj;
+
+		return new ResponseEntity<>(userObj, HttpStatus.OK);
 	}
 
+	// ================= DOCTOR LOGIN =================
 	@PostMapping("/logindoctor")
-	public Doctor loginDoctor(@RequestBody Doctor doctor) throws Exception {
-		String currEmail = doctor.getEmail();
-		String currPassword = doctor.getPassword();
+	public ResponseEntity<?> loginDoctor(@RequestBody Doctor doctor) {
 
-		Doctor doctorObj = null;
-		if (currEmail != null && currPassword != null) {
-			doctorObj = doctorRegisterService.fetchDoctorByEmailAndPassword(currEmail, currPassword);
-		}
+		Doctor doctorObj = doctorRegisterService
+				.fetchDoctorByEmailAndPassword(doctor.getEmail(), doctor.getPassword());
+
 		if (doctorObj == null) {
-			throw new Exception("User does not exists!!! Please enter valid credentials...");
+			return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
 		}
-		return doctorObj;
-	}
 
+		return new ResponseEntity<>(doctorObj, HttpStatus.OK);
+	}
 }

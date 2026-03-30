@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Slots 
-{
+@Table(name = "slots")
+public class Slots {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -22,14 +23,13 @@ public class Slots
 	private String pmstatus;
 	private String date;
 	private String patienttype;
-	
-	public Slots() 
-	{
+
+	public Slots() {
 		super();
 	}
 
-	public Slots(int id, String email, String doctorname, String specialization, String amslot, String amstatus, String noonslot, String noonstatus, String pmslot, String pmstatus, String date, String patienttype) 
-	{
+	public Slots(int id, String email, String doctorname, String specialization, String amslot, String amstatus,
+			String noonslot, String noonstatus, String pmslot, String pmstatus, String date, String patienttype) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -139,6 +139,6 @@ public class Slots
 
 	public void setPatienttype(String patienttype) {
 		this.patienttype = patienttype;
-	}	
-	
+	}
+
 }

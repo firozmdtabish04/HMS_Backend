@@ -1,6 +1,6 @@
 package com.application.config;
 
-import java.util.List;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,41 +36,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
+    // 🔐 Authentication
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(registrationService);
     }
 
+    // 🔐 Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
+    // 🔐 Authentication Manager
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    // ✅ FINAL CORS CONFIGURATION (IMPORTANT)
+    // 🌐 FINAL CORS CONFIG (ONLY ONE)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(
-                List.of("https://lovely-biscuit-392f4e.netlify.app"));
-        configuration.setAllowedMethods(
-                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("*"));
+
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
 
+    // 🔐 Security Config
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -78,19 +79,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .authorizeRequests()
 
-                // ✅ VERY IMPORTANT (fix preflight)
+                // ✅ Allow preflight requests
                 .antMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
 
+                // ✅ Public APIs
                 .antMatchers(
-                        "/authenticate",
                         "/",
+                        "/authenticate",
                         "/loginuser",
                         "/logindoctor",
                         "/registeruser",
                         "/registerdoctor",
                         "/addDoctor",
-                        "/gettotalusers",
                         "/doctorlist",
+                        "/gettotalusers",
                         "/gettotaldoctors",
                         "/gettotalslots",
                         "/acceptstatus/**",
@@ -126,11 +128,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**")
                 .permitAll()
 
+                // 🔐 Secured APIs
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // 🔐 JWT Filter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }

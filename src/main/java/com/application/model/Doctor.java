@@ -2,10 +2,11 @@ package com.application.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Doctor 
-{
+@Table(name = "doctor")
+public class Doctor {
 	@Id
 	private String email;
 	private String doctorname;
@@ -17,14 +18,13 @@ public class Doctor
 	private String address;
 	private String password;
 	private String status;
-	
-	public Doctor() 
-	{
+
+	public Doctor() {
 		super();
 	}
 
-	public Doctor(String email, String doctorname, String mobile, String gender, String experience, String specialization, String previoushospital, String address, String password, String status) 
-	{
+	public Doctor(String email, String doctorname, String mobile, String gender, String experience,
+			String specialization, String previoushospital, String address, String password, String status) {
 		super();
 		this.email = email;
 		this.doctorname = doctorname;
@@ -38,103 +38,83 @@ public class Doctor
 		this.status = status;
 	}
 
-	public String getEmail() 
-	{
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) 
-	{
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public String getDoctorname() 
-	{
+	public String getDoctorname() {
 		return doctorname;
 	}
 
-	public void setDoctorname(String doctorname) 
-	{
+	public void setDoctorname(String doctorname) {
 		this.doctorname = doctorname;
 	}
 
-	public String getMobile() 
-	{
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(String mobile) 
-	{
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	public String getGender() 
-	{
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) 
-	{
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public String getExperience() 
-	{
+	public String getExperience() {
 		return experience;
 	}
 
-	public void setExperience(String experience) 
-	{
+	public void setExperience(String experience) {
 		this.experience = experience;
 	}
 
-	public String getSpecialization() 
-	{
+	public String getSpecialization() {
 		return specialization;
 	}
 
-	public void setSpecialization(String specialization) 
-	{
+	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
 	}
 
-	public String getPrevioushospital() 
-	{
+	public String getPrevioushospital() {
 		return previoushospital;
 	}
 
-	public void setPrevioushospital(String previoushospital) 
-	{
+	public void setPrevioushospital(String previoushospital) {
 		this.previoushospital = previoushospital;
 	}
 
-	public String getAddress() 
-	{
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) 
-	{
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public String getPassword() 
-	{
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) 
-	{
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getStatus() 
-	{
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) 
-	{
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

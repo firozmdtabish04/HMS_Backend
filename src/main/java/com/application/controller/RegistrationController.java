@@ -29,13 +29,14 @@ public class RegistrationController {
 	@PostMapping("/registeruser")
 	public User registerUser(@RequestBody User user) throws Exception {
 		String currEmail = user.getEmail();
-		if (currEmail != null || !"".equals(currEmail)) {
+		if (currEmail != null && !"".equals(currEmail)) {
 			User userObj = userRegisterService.fetchUserByEmail(currEmail);
 			if (userObj != null) {
 				throw new Exception("User with " + currEmail + " already exists !!!");
 			}
 		}
 		System.out.println("here");
+
 		User userObj = null;
 		userObj = userRegisterService.saveUser(user);
 		return userObj;
@@ -44,7 +45,7 @@ public class RegistrationController {
 	@PostMapping("/registerdoctor")
 	public Doctor registerDoctor(@RequestBody Doctor doctor) throws Exception {
 		String currEmail = doctor.getEmail();
-		if (currEmail != null || !"".equals(currEmail)) {
+		if (currEmail != null && !"".equals(currEmail)) {
 			Doctor doctorObj = doctorRegisterService.fetchDoctorByEmail(currEmail);
 			if (doctorObj != null) {
 				throw new Exception("Doctor with " + currEmail + " already exists !!!");

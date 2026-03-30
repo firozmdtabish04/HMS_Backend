@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Appointments 
-{
+@Table(name = "appointments")
+public class Appointments {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -23,14 +24,14 @@ public class Appointments
 	private String slot;
 	private String appointmentstatus;
 	private String admissionstatus;
-	
-	public Appointments() 
-	{
+
+	public Appointments() {
 		super();
 	}
 
-	public Appointments(int id,String patientid, String patientname, String email, String doctorname, String specialization, String date, String age, String gender, String problem, String slot, String appointmentstatus, String admissionstatus) 
-	{
+	public Appointments(int id, String patientid, String patientname, String email, String doctorname,
+			String specialization, String date, String age, String gender, String problem, String slot,
+			String appointmentstatus, String admissionstatus) {
 		super();
 		this.id = id;
 		this.patientid = patientid;
@@ -54,7 +55,7 @@ public class Appointments
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getPatientid() {
 		return patientid;
 	}

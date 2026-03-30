@@ -4,10 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Prescription 
-{
+@Table(name = "prescription")
+public class Prescription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
@@ -20,14 +21,13 @@ public class Prescription
 	private String date;
 	private String prescription;
 	private String admissionstatus;
-	
-	public Prescription() 
-	{
+
+	public Prescription() {
 		super();
 	}
 
-	public Prescription(int id, String patientid, String patientname, String doctorname, String disease, String gender, String age, String date, String prescription, String admissionstatus) 
-	{
+	public Prescription(int id, String patientid, String patientname, String doctorname, String disease, String gender,
+			String age, String date, String prescription, String admissionstatus) {
 		super();
 		this.id = id;
 		this.patientid = patientid;
@@ -64,7 +64,7 @@ public class Prescription
 	public void setPatientname(String patientname) {
 		this.patientname = patientname;
 	}
-	
+
 	public String getDoctorname() {
 		return doctorname;
 	}
@@ -96,7 +96,7 @@ public class Prescription
 	public void setAge(String age) {
 		this.age = age;
 	}
-	
+
 	public String getDate() {
 		return date;
 	}

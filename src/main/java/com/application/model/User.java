@@ -2,10 +2,11 @@ package com.application.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class User 
-{
+@Table(name = "users")
+public class User {
 	@Id
 	private String email;
 	private String username;
@@ -14,14 +15,13 @@ public class User
 	private String age;
 	private String address;
 	private String password;
-	
-	public User() 
-	{
+
+	public User() {
 		super();
 	}
 
-	public User(String email, String username, String mobile, String gender, String age, String address, String password)
-	{
+	public User(String email, String username, String mobile, String gender, String age, String address,
+			String password) {
 		super();
 		this.email = email;
 		this.username = username;
@@ -32,74 +32,60 @@ public class User
 		this.password = password;
 	}
 
-	public String getEmail() 
-	{
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) 
-	{
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public String getUsername() 
-	{
+	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) 
-	{
+	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	public String getMobile()
-	{
+	public String getMobile() {
 		return mobile;
 	}
 
-	public void setMobile(String mobile) 
-	{
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	public String getGender() 
-	{
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) 
-	{
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public String getAge()
-    {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(String age) 
-	{
+	public void setAge(String age) {
 		this.age = age;
 	}
 
-	public String getAddress() 
-	{
+	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) 
-	{
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public String getPassword() 
-	{
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) 
-	{
+	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 }
