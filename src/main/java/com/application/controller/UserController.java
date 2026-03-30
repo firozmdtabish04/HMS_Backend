@@ -33,14 +33,12 @@ public class UserController {
 	private PrescriptionService prescriptionService;
 
 	@GetMapping("/userlist")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<User>> getUsers() throws Exception {
 		List<User> users = userRegisterService.getAllUsers();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
 	@GetMapping("/getprescriptionbyname/{patientname}")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Prescription>> getPrescriptionByPatientname(@PathVariable String patientname)
 			throws Exception {
 		List<Prescription> prescription = prescriptionService.getPrescriptionByPatientname(patientname);
@@ -48,21 +46,18 @@ public class UserController {
 	}
 
 	@GetMapping("/patientlistbyemail/{email}")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Appointments>> getPatientList(@PathVariable String email) throws Exception {
 		List<Appointments> patients = appointmentBookingService.findPatientByEmail(email);
 		return new ResponseEntity<List<Appointments>>(patients, HttpStatus.OK);
 	}
 
 	@GetMapping("/patientlist")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Appointments>> getPatients() throws Exception {
 		List<Appointments> patients = appointmentBookingService.getAllPatients();
 		return new ResponseEntity<List<Appointments>>(patients, HttpStatus.OK);
 	}
 
 	@GetMapping("/gettotalpatients")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Integer>> getTotalPatients() throws Exception {
 		List<Appointments> patients = appointmentBookingService.getAllPatients();
 		List<Integer> al = new ArrayList<>();
@@ -71,7 +66,6 @@ public class UserController {
 	}
 
 	@GetMapping("/gettotalappointments")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Integer>> getTotalAppointments() throws Exception {
 		List<Appointments> patients = appointmentBookingService.getAllPatients();
 		List<Integer> al = new ArrayList<>();
@@ -80,7 +74,6 @@ public class UserController {
 	}
 
 	@GetMapping("/gettotalprescriptions")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<Integer>> getTotalPrescriptions() throws Exception {
 		List<Prescription> patients = prescriptionService.getAllPrescriptions();
 		List<Integer> al = new ArrayList<>();
@@ -89,21 +82,18 @@ public class UserController {
 	}
 
 	@GetMapping("/profileDetails/{email}")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<List<User>> getProfileDetails(@PathVariable String email) throws Exception {
 		List<User> users = userRegisterService.fetchProfileByEmail(email);
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
 	@PutMapping("/updateuser")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<User> updateUserProfile(@RequestBody User user) throws Exception {
 		User userobj = userRegisterService.updateUserProfile(user);
 		return new ResponseEntity<User>(userobj, HttpStatus.OK);
 	}
 
 	@PostMapping("/bookNewAppointment")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Appointments> addNewAppointment(
 			@RequestBody Appointments appointment) throws Exception {
 

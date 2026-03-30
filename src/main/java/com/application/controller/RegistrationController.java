@@ -19,25 +19,20 @@ import com.application.service.DoctorRegistrationService;
 import com.application.service.UserRegistrationService;
 
 @RestController
-public class RegistrationController 
-{
+public class RegistrationController {
 	@Autowired
 	private UserRegistrationService userRegisterService;
-	
+
 	@Autowired
 	private DoctorRegistrationService doctorRegisterService;
-	
+
 	@PostMapping("/registeruser")
-	@CrossOrigin(origins = "http://localhost:4200")
-	public User registerUser(@RequestBody User user) throws Exception
-	{
+	public User registerUser(@RequestBody User user) throws Exception {
 		String currEmail = user.getEmail();
-		if(currEmail != null || !"".equals(currEmail))
-		{
+		if (currEmail != null || !"".equals(currEmail)) {
 			User userObj = userRegisterService.fetchUserByEmail(currEmail);
-			if(userObj != null)
-			{
-				throw new Exception("User with "+currEmail+" already exists !!!");
+			if (userObj != null) {
+				throw new Exception("User with " + currEmail + " already exists !!!");
 			}
 		}
 		System.out.println("here");
@@ -45,38 +40,30 @@ public class RegistrationController
 		userObj = userRegisterService.saveUser(user);
 		return userObj;
 	}
-	
+
 	@PostMapping("/registerdoctor")
-	@CrossOrigin(origins = "http://localhost:4200")
-	public Doctor registerDoctor(@RequestBody Doctor doctor) throws Exception
-	{
+	public Doctor registerDoctor(@RequestBody Doctor doctor) throws Exception {
 		String currEmail = doctor.getEmail();
-		if(currEmail != null || !"".equals(currEmail))
-		{
+		if (currEmail != null || !"".equals(currEmail)) {
 			Doctor doctorObj = doctorRegisterService.fetchDoctorByEmail(currEmail);
-			if(doctorObj != null)
-			{
-				throw new Exception("Doctor with "+currEmail+" already exists !!!");
+			if (doctorObj != null) {
+				throw new Exception("Doctor with " + currEmail + " already exists !!!");
 			}
 		}
 		Doctor doctorObj = null;
 		doctorObj = doctorRegisterService.saveDoctor(doctor);
 		return doctorObj;
 	}
-	
+
 	@PostMapping("/addDoctor")
-	@CrossOrigin(origins = "http://localhost:4200")
-	public Doctor addNewDoctor(@RequestBody Doctor doctor) throws Exception
-	{
+	public Doctor addNewDoctor(@RequestBody Doctor doctor) throws Exception {
 		Doctor doctorObj = null;
 		doctorObj = doctorRegisterService.saveDoctor(doctor);
 		return doctorObj;
 	}
-	
+
 	@GetMapping("/gettotalusers")
-	@CrossOrigin(origins = "http://localhost:4200")
-	public ResponseEntity<List<Integer>> getTotalSlots() throws Exception
-	{
+	public ResponseEntity<List<Integer>> getTotalSlots() throws Exception {
 		List<User> users = userRegisterService.getAllUsers();
 		List<Integer> al = new ArrayList<>();
 		al.add(users.size());
