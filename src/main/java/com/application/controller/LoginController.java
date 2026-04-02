@@ -67,8 +67,11 @@ public class LoginController {
 	@PostMapping("/loginuser")
 	public ResponseEntity<?> loginUser(@RequestBody User user) {
 
-		User userObj = userRegisterService
-				.fetchUserByEmailAndPassword(user.getEmail(), user.getPassword());
+		User userObj = userRegisterService.fetchUserByEmail(user.getEmail());
+
+		if (userObj == null || !userObj.getPassword().equals(user.getPassword())) {
+			return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+		}
 
 		if (userObj == null) {
 			return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
